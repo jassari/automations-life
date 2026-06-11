@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <title>Automations.life | Agentes de IA para tu negocio</title>
+  <meta name="description" content="Automatiza con IA las conversaciones más críticas de tu negocio. Agendamiento, ventas y cobro de cartera 24/7. Sin contratar más personal. Desde 150 USD." />
+  <style>
+
+    /* ============================================================
+       VARIABLES GLOBALES
+       Edita este bloque para cambiar colores, fuente y espaciado
+       de toda la página desde un solo lugar.
+    ============================================================ */
+    :root {
+
+      /* --- Colores principales --- */
+      --color-bg:        #080C14;   /* fondo general de la página */
+      --color-primary:   #00D4FF;   /* color de acento (botones, highlights) */
+      --color-text:      #F0F4FF;   /* texto principal */
+      --color-muted:     rgba(255,255,255,0.45); /* texto secundario / subtítulos */
+      --color-border:    rgba(255,255,255,0.07); /* bordes de cards y nav */
+      --color-card:      rgba(255,255,255,0.04); /* fondo de cards */
+
+      /* --- Logo (2 colores) ---
+         logo-1 → "automations"
+         logo-2 → ".life"           */
+      --logo-color-1:    #00D4FF;
+      --logo-color-2:    #ffffff;
+
+      /* --- Botón primario ---
+         Cambia si quieres un botón de color distinto al acento */
+      --btn-bg:          #00D4FF;   /* fondo del botón principal */
+      --btn-text:        #080C14;   /* texto del botón principal */
+
+      /* --- Tipografía --- */
+      --font:  'Segoe UI', system-ui, -apple-system, sans-serif;
+
+      /* --- Espaciado lateral de secciones --- */
+      --side-padding: 6%;
+    }
+
+
+    /* ============================================================
+       RESET
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html  { scroll-behavior: smooth; }
+    body  {
+      background: var(--color-bg);
+      color:      var(--color-text);
+      font-family: var(--font);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+
+    /* ============================================================
+       NAV — mobile first
+       Móvil:   logo + CTA (links ocultos)
+       Desktop: logo + links + toggle + CTA
+    ============================================================ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem var(--side-padding);
+      background: rgba(8,12,20,0.88); /* mismo tono que --color-bg con alpha */
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    /* Logo */
+    .logo { text-decoration: none; font-size: 1.2rem; font-weight: 800; letter-spacing: -0.5px; }
+    .logo em     { color: var(--logo-color-1); font-style: normal; }
+    .logo strong { color: var(--logo-color-2); font-weight: 800; }
+
+    /* Links — ocultos en móvil, visibles en desktop */
+    .nav-links { display: none; }
+
+    /* Lado derecho del nav */
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+
+    /* Toggle de idioma */
+    .lang-toggle {
+      display: flex;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .lang-btn {
+      background: transparent; border: none;
+      color: var(--color-muted);
+      font-size: 0.75rem; font-weight: 700;
+      padding: 0.35rem 0.65rem;
+      cursor: pointer; letter-spacing: 0.5px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .lang-btn.active  { background: var(--color-primary); color: var(--btn-text); }
+    .lang-btn:hover:not(.active) { color: var(--color-text); }
+
+    /* Botón CTA del nav */
+    .nav-cta {
+      border: 1px solid rgba(0,212,255,0.4); /* borde usa tono de --color-primary */
+      color: var(--color-primary);
+      padding: 0.45rem 1rem;
+      border-radius: 8px;
+      font-size: 0.8rem; font-weight: 600;
+      text-decoration: none; white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: rgba(0,212,255,0.08); }
+
+    /* Desktop: mostrar links */
+    @media (min-width: 1024px) {
+      .nav-links {
+        display: flex; gap: 2.5rem; list-style: none;
+      }
+      .nav-links a {
+        color: var(--color-muted); text-decoration: none;
+        font-size: 0.875rem; transition: color 0.2s;
+      }
+      .nav-links a:hover { color: var(--color-text); }
+
+      .logo    { font-size: 1.3rem; }
+      .nav-cta { font-size: 0.875rem; padding: 0.5rem 1.3rem; }
+    }
+
+
+    /* ============================================================
+       HERO — mobile first
+    ============================================================ */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 7rem var(--side-padding) 4rem;
+      position: relative; overflow: hidden;
+    }
+
+    /* Glow decorativo detrás del hero —
+       cambia el color inline si cambias --color-primary */
+    .hero::before {
+      content: '';
+      position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+      width: 500px; height: 400px;
+      background: radial-gradient(ellipse, rgba(0,212,255,0.10) 0%, transparent 65%);
+      pointer-events: none;
+      /* Si cambias --color-primary, actualiza el color del radial-gradient aquí */
+    }
+
+    /* Headline principal */
+    h1 {
+      font-size: 2.4rem; /* móvil */
+      font-weight: 900; line-height: 1.08;
+      letter-spacing: -1.5px;
+      margin-bottom: 1.4rem;
+    }
+    h1 .accent { color: var(--color-primary); }
+
+    @media (min-width: 640px)  { h1 { font-size: 3rem;   letter-spacing: -2px; } }
+    @media (min-width: 768px)  { h1 { font-size: 3.8rem; letter-spacing: -2.5px; } }
+    @media (min-width: 1024px) { h1 { font-size: 5rem;   letter-spacing: -3px; } }
+
+    /* Subtítulo */
+    .hero-sub {
+      color: var(--color-muted);
+      font-size: 1.05rem; /* móvil */
+      max-width: 520px; line-height: 1.75;
+      margin-bottom: 2.4rem;
+    }
+    @media (min-width: 768px)  { .hero-sub { font-size: 1.15rem; } }
+    @media (min-width: 1024px) { .hero-sub { font-size: 1.25rem; } }
+
+    /* Botones */
+    .hero-btns {
+      display: flex; flex-direction: column; /* móvil: apilados */
+      gap: 0.85rem; width: 100%; max-width: 320px;
+      margin-bottom: 1.2rem;
+    }
+    @media (min-width: 640px) {
+      .hero-btns { flex-direction: row; max-width: none; width: auto; }
+    }
+
+    .btn-primary {
+      background: var(--btn-bg); color: var(--btn-text);
+      padding: 0.9rem 2rem; border-radius: 10px;
+      font-size: 1.05rem; font-weight: 800;
+      text-decoration: none; text-align: center;
+      border: none; cursor: pointer;
+      box-shadow: 0 0 20px rgba(0,212,255,0.35); /* glow — actualiza el color si cambias --color-primary */
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 32px rgba(0,212,255,0.55); /* glow más fuerte en hover */
+    }
+
+    /* Stats */
+    .hero-stats {
+      display: flex; flex-wrap: wrap;
+      justify-content: center; gap: 2rem;
+      margin-top: 4rem; padding-top: 2.5rem;
+      border-top: 1px solid var(--color-border);
+      width: 100%;
+    }
+    @media (min-width: 768px) {
+      .hero-stats { gap: 3.5rem; }
+    }
+
+    .stat { text-align: center; }
+    .stat-num {
+      font-size: 2.4rem; font-weight: 900; letter-spacing: -1px;
+      color: var(--color-primary);
+    }
+    @media (min-width: 768px) { .stat-num { font-size: 3rem; } }
+
+    .stat-label {
+      font-size: 1rem; color: var(--color-muted); margin-top: 0.2rem;
+    }
+
+
+    /* ============================================================
+       CÓMO FUNCIONA
+       3 pasos en columna (móvil) y fila (desktop).
+       La línea conectora entre pasos solo aparece en desktop.
+    ============================================================ */
+    .how {
+      padding: 5rem var(--side-padding);
+      background: var(--color-card); /* fondo ligeramente distinto al bg para separar secciones */
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    /* Contenedor de pasos */
+    .steps {
+      display: flex;
+      flex-direction: column; /* móvil: apilados */
+      gap: 2rem;
+      max-width: 900px; margin: 0 auto;
+      position: relative;
+    }
+    @media (min-width: 768px) {
+      .steps {
+        flex-direction: row; /* desktop: en fila */
+        gap: 0;
+      }
+    }
+
+    /* Línea conectora entre pasos — solo desktop */
+    @media (min-width: 768px) {
+      .steps::before {
+        content: '';
+        position: absolute;
+        top: 28px; /* alineada al centro del círculo */
+        left: calc(16.66% + 1rem);
+        right: calc(16.66% + 1rem);
+        height: 1px;
+        background: var(--color-border);
+      }
+    }
+
+    /* Paso individual */
+    .step {
+      display: flex;
+      flex-direction: row; /* móvil: círculo a la izquierda */
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+    @media (min-width: 768px) {
+      .step {
+        flex: 1;
+        flex-direction: column; /* desktop: círculo arriba */
+        align-items: center;
+        text-align: center;
+        padding: 0 1.5rem;
+      }
+    }
+
+    /* Círculo numerado */
+    .step-circle {
+      flex-shrink: 0;
+      width: 56px; height: 56px; border-radius: 50%;
+      border: 1px solid var(--color-primary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; font-weight: 900;
+      color: var(--color-primary);
+      background: var(--color-bg);
+      position: relative; z-index: 1; /* sobre la línea conectora */
+    }
+
+    .step-title {
+      font-size: 1rem; font-weight: 800;
+      margin-bottom: 0.4rem; letter-spacing: -0.3px;
+    }
+    @media (min-width: 768px) {
+      .step-title { margin-top: 1rem; }
+    }
+
+    .step-desc {
+      font-size: 1.05rem; color: var(--color-muted); line-height: 1.65;
+    }
+
+
+    /* ============================================================
+       FOOTER
+       Minimal — logo, último CTA, links legales, copyright.
+    ============================================================ */
+    footer {
+      padding: 2.5rem var(--side-padding);
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column; /* móvil: apilado */
+      align-items: center;
+      gap: 1.25rem;
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      footer {
+        flex-direction: row; /* desktop: en fila */
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
+
+    .footer-logo { text-decoration: none; font-size: 1.1rem; font-weight: 800; }
+    .footer-logo em     { color: var(--logo-color-1); font-style: normal; }
+    .footer-logo strong { color: var(--logo-color-2); }
+
+    /* Links legales */
+    .footer-links {
+      display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center;
+    }
+    .footer-links a {
+      color: var(--color-muted); text-decoration: none;
+      font-size: 0.8rem; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--color-text); }
+
+    .footer-copy {
+      font-size: 0.78rem; color: var(--color-muted);
+    }
+
+
+    /* ============================================================
+       CTA DE CONTACTO
+       Sección de conversión final antes del footer.
+       Fondo con glow para destacarla visualmente.
+    ============================================================ */
+    .cta-section {
+      padding: 5rem var(--side-padding);
+      text-align: center;
+      position: relative; overflow: hidden;
+      border-top: 1px solid var(--color-border);
+    }
+
+    /* Glow de fondo — igual que el hero.
+       Si cambias --color-primary actualiza el color aquí también */
+    .cta-section::before {
+      content: '';
+      position: absolute; bottom: -100px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(0,212,255,0.09) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta-section .section-title { margin-bottom: 1rem; }
+
+    .cta-section .section-sub { margin-bottom: 2rem; }
+
+    /* Botones — mismos estilos que hero-btns pero centrados */
+    .cta-btns {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0.85rem;
+      margin-bottom: 1.2rem;
+    }
+    @media (min-width: 640px) {
+      .cta-btns { flex-direction: row; justify-content: center; }
+    }
+
+    /* ============================================================
+       SOLUCIONES
+       3 cards: Agendamiento, Ejecutivo Comercial, Cobro de Cartera
+    ============================================================ */
+    .solutions {
+      padding: 5rem var(--side-padding);
+    }
+
+    /* Encabezado de sección — reutilizable para otras secciones */
+    .section-tag {
+      display: flex; align-items: center; gap: 0.5rem;
+      justify-content: center;
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--color-primary);
+      margin-bottom: 1rem;
+    }
+    .section-tag::before,
+    .section-tag::after {
+      content: ''; display: block;
+      width: 20px; height: 1px;
+      background: var(--color-primary); opacity: 0.4;
+    }
+
+    .section-title {
+      font-size: 1.9rem; /* móvil */
+      font-weight: 900; letter-spacing: -1.5px;
+      text-align: center; margin-bottom: 0.75rem;
+    }
+    @media (min-width: 768px)  { .section-title { font-size: 2.6rem; } }
+    @media (min-width: 1024px) { .section-title { font-size: 3.2rem; letter-spacing: -2px; } }
+
+    .section-sub {
+      text-align: center; color: var(--color-muted);
+      font-size: 1.05rem; max-width: 500px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+    }
+    @media (min-width: 768px) { .section-sub { font-size: 1.1rem; } }
+
+    /* Grid de cards — 1 col móvil, 3 col desktop */
+    .solutions-grid {
+      display: grid;
+      grid-template-columns: 1fr; /* móvil */
+      gap: 1.25rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+      .solutions-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    }
+
+    /* Card */
+    .sol-card {
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 18px;
+      padding: 2rem 1.75rem;
+      display: flex; flex-direction: column; gap: 1rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .sol-card:hover {
+      border-color: rgba(0,212,255,0.3); /* tono de --color-primary */
+      transform: translateY(-4px);
+    }
+
+    /* Nombre de la solución */
+    .sol-name {
+      font-size: 1.2rem; font-weight: 800; letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    /* A quién va dirigida */
+    .sol-target {
+      font-size: 0.9rem; color: var(--color-primary);
+      font-weight: 600; opacity: 0.8;
+    }
+
+    /* Divisor */
+    .sol-divider {
+      height: 1px; background: var(--color-border);
+    }
+
+    /* Lista de problemas que resuelve */
+    .sol-list {
+      list-style: none; display: flex; flex-direction: column; gap: 0.65rem;
+      flex: 1;
+    }
+    .sol-list li {
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      font-size: 1.05rem; color: var(--color-muted); line-height: 1.5;
+    }
+    /* Ícono check de cada bullet */
+    .sol-list li::before {
+      content: '✓';
+      color: var(--color-primary);
+      font-weight: 800; font-size: 0.75rem;
+      margin-top: 2px; flex-shrink: 0;
+    }
+
+    /* ============================================================
+       ILUSTRACIÓN ANIMADA — nodo central + 3 procesos
+    ============================================================ */
+    .agent-diagram {
+      max-width: 500px;
+      margin: 0 auto 3.5rem;
+    }
+
+    .agent-diagram svg {
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+
+    .conn-line {
+      stroke: var(--color-primary);
+      stroke-width: 1.5;
+      stroke-dasharray: 6 6;
+      opacity: 0.22;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAV
+  ============================================================ -->
+  <nav>
+    <a href="#" class="logo">
+      <em>automations</em><strong>.life</strong>
+    </a>
+
+    <!-- Links — visibles solo en desktop (ver CSS) -->
+    <ul class="nav-links">
+      <li><a href="#" data-es="Inicio"         data-en="Home">Inicio</a></li>
+      <li><a href="#como-funciona" data-es="Cómo empezar" data-en="How to start">Cómo empezar</a></li>
+      <li><a href="#soluciones"    data-es="Agentes"       data-en="Agents">Agentes</a></li>
+      <li><a href="#precios"       data-es="Precios"       data-en="Pricing">Precios</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <!-- Toggle idioma -->
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('es', this)">ES</button>
+        <button class="lang-btn"        onclick="setLang('en', this)">EN</button>
+      </div>
+
+      <!-- CTA -->
+      <a href="https://wa.me/573204701302" target="_blank" rel="noopener" class="nav-cta"
+         data-es="Hablar con un asesor"
+         data-en="Talk to an advisor">
+        <i class="fa-brands fa-whatsapp"></i> Hablar con un asesor
+      </a>
+    </div>
+  </nav>
+
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="hero">
+
+    <!-- Headline — edita los data-es / data-en para cambiar textos -->
+    <h1>
+      <span data-es="Automatizamos para"
+            data-en="We automate for">Automatizamos para</span><br/>
+      <span class="accent"
+            data-es="reducir tus costos y aumentar tus ganancias."
+            data-en="reduce your costs and increase your revenue.">reducir tus costos y aumentar tus ganancias.</span>
+    </h1>
+
+    <!-- Subtítulo -->
+    <p class="hero-sub"
+       data-es="Agentes IA asequibles paara disparar tu negocio"
+       data-en="Affordable AI agents to supercharge your business">
+      Agentes IA asequibles paara disparar tu negocio
+    </p>
+
+    <!-- Botones -->
+    <div class="hero-btns">
+      <a href="https://wa.me/573204701302" target="_blank" rel="noopener" class="btn-primary"
+         data-es="Hablar con un asesor"
+         data-en="Talk to an advisor">
+        <i class="fa-brands fa-whatsapp"></i> Hablar con un asesor
+      </a>
+    </div>
+
+    <!-- Stats — cambia los números según datos reales -->
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">+40%</div>
+        <div class="stat-label"
+             data-es="más citas agendadas"
+             data-en="more appointments booked">
+          más citas agendadas
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3x</div>
+        <div class="stat-label"
+             data-es="más seguimiento comercial"
+             data-en="more sales follow-up">
+          más seguimiento comercial
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">-60%</div>
+        <div class="stat-label"
+             data-es="en cartera vencida"
+             data-en="in overdue receivables">
+          en cartera vencida
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+       SOLUCIONES
+       Agrega o quita cards según crezca el portafolio.
+       Cada card: número, nombre, dirigido-a, bullets, micro-CTA.
+  ============================================================ -->
+  <section class="solutions" id="soluciones">
+
+    <p class="section-tag"
+       data-es="Nuestras soluciones"
+       data-en="Our solutions">
+      Nuestras soluciones
+    </p>
+
+    <h2 class="section-title"
+        data-es="Un agente para cada proceso crítico"
+        data-en="An agent for every critical process">
+      Un agente para cada proceso crítico
+    </h2>
+
+    <p class="section-sub"
+       data-es="Cada solución está diseñada para resolver un problema de negocio específico, no para ser tecnología por la tecnología."
+       data-en="Each solution is designed to solve a specific business problem, not to be technology for technology's sake.">
+      Cada solución está diseñada para resolver un problema de negocio específico, no para ser tecnología por la tecnología.
+    </p>
+
+    <!-- Ilustración animada: agente central → 3 procesos -->
+    <div class="agent-diagram" aria-hidden="true">
+      <svg viewBox="0 -40 560 470" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <defs>
+          <filter id="ag-glow" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="ag-glow-lg" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="14" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <path id="ap1" d="M280,158 L280,118"/>
+          <path id="ap2" d="M238,241 L131,318"/>
+          <path id="ap3" d="M322,241 L429,318"/>
+        </defs>
+
+        <!-- Líneas de conexión -->
+        <line x1="280" y1="158" x2="280" y2="118" class="conn-line"/>
+        <line x1="238" y1="241" x2="131" y2="318" class="conn-line"/>
+        <line x1="322" y1="241" x2="429" y2="318" class="conn-line"/>
+
+        <!-- Partículas fluyendo: línea 1 (centro → agendamiento) -->
+        <circle r="3.5" fill="#00D4FF" filter="url(#ag-glow)">
+          <animateMotion dur="1.6s" repeatCount="indefinite" begin="0s"><mpath xlink:href="#ap1"/></animateMotion>
+          <animate attributeName="opacity" values="0;0.9;0.9;0" dur="1.6s" repeatCount="indefinite" begin="0s"/>
+        </circle>
+        <circle r="3.5" fill="#00D4FF" filter="url(#ag-glow)">
+          <animateMotion dur="1.6s" repeatCount="indefinite" begin="-0.8s"><mpath xlink:href="#ap1"/></animateMotion>
+          <animate attributeName="opacity" values="0;0.9;0.9;0" dur="1.6s" repeatCount="indefinite" begin="-0.8s"/>
+        </circle>
+
+        <!-- Partículas fluyendo: línea 2 (centro → ventas) -->
+        <circle r="3.5" fill="#00D4FF" filter="url(#ag-glow)">
+          <animateMotion dur="2s" repeatCount="indefinite" begin="-0.3s"><mpath xlink:href="#ap2"/></animateMotion>
+          <animate attributeName="opacity" values="0;0.9;0.9;0" dur="2s" repeatCount="indefinite" begin="-0.3s"/>
+        </circle>
+        <circle r="3.5" fill="#00D4FF" filter="url(#ag-glow)">
+          <animateMotion dur="2s" repeatCount="indefinite" begin="-1.3s"><mpath xlink:href="#ap2"/></animateMotion>
+          <animate attributeName="opacity" values="0;0.9;0.9;0" dur="2s" repeatCount="indefinite" begin="-1.3s"/>
+        </circle>
+
+        <!-- Partículas fluyendo: línea 3 (centro → cobro) -->
+        <circle r="3.5" fill="#00D4FF" filter="url(#ag-glow)">
+          <animateMotion dur="2s" repeatCount="indefinite" begin="-0.6s"><mpath xlink:href="#ap3"/></animateMotion>
+          <animate attributeName="opacity" values="0;0.9;0.9;0" dur="2s" repeatCount="indefinite" begin="-0.6s"/>
+        </circle>
+        <circle r="3.5" fill="#00D4FF" filter="url(#ag-glow)">
+          <animateMotion dur="2s" repeatCount="indefinite" begin="-1.6s"><mpath xlink:href="#ap3"/></animateMotion>
+          <animate attributeName="opacity" values="0;0.9;0.9;0" dur="2s" repeatCount="indefinite" begin="-1.6s"/>
+        </circle>
+
+        <!-- Nodo central: anillos de pulso expansivo -->
+        <circle cx="280" cy="210" r="55" fill="none" stroke="#00D4FF" stroke-width="1.5" opacity="0">
+          <animate attributeName="r" from="55" to="92" dur="2.8s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" from="0.45" to="0" dur="2.8s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="280" cy="210" r="55" fill="none" stroke="#00D4FF" stroke-width="1.5" opacity="0">
+          <animate attributeName="r" from="55" to="92" dur="2.8s" begin="-1.4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" from="0.45" to="0" dur="2.8s" begin="-1.4s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Nodo central: glow, cuerpo y anillo rotante -->
+        <circle cx="280" cy="210" r="52" fill="#00D4FF" opacity="0.06" filter="url(#ag-glow-lg)"/>
+        <circle cx="280" cy="210" r="52" fill="#080C14" stroke="#00D4FF" stroke-width="2"/>
+        <circle cx="280" cy="210" r="43" fill="none" stroke="#00D4FF" stroke-width="0.8" stroke-dasharray="5 9" opacity="0.4">
+          <animateTransform attributeName="transform" type="rotate" from="0 280 210" to="360 280 210" dur="14s" repeatCount="indefinite"/>
+        </circle>
+        <text x="280" y="204" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="10" font-weight="700" letter-spacing="3" fill="#00D4FF" opacity="0.85">AGENTE</text>
+        <text x="280" y="226" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="20" font-weight="900" fill="#F0F4FF">IA</text>
+
+        <!-- Nodo 1: Agendamiento (arriba) -->
+        <circle cx="280" cy="80" r="38" fill="#080C14" stroke="#00D4FF" stroke-width="1.5" filter="url(#ag-glow)"/>
+        <g transform="translate(280,80)">
+          <rect x="-13" y="-12" width="26" height="22" rx="2.5" fill="none" stroke="#00D4FF" stroke-width="1.5"/>
+          <line x1="-13" y1="-4" x2="13" y2="-4" stroke="#00D4FF" stroke-width="1.5"/>
+          <line x1="-6" y1="-15" x2="-6" y2="-9" stroke="#00D4FF" stroke-width="2"/>
+          <line x1="6" y1="-15" x2="6" y2="-9" stroke="#00D4FF" stroke-width="2"/>
+          <rect x="-9" y="-1" width="5" height="4" rx="0.5" fill="#00D4FF" opacity="0.9"/>
+          <rect x="4" y="-1" width="5" height="4" rx="0.5" fill="#00D4FF" opacity="0.5"/>
+        </g>
+        <text x="280" y="15" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" font-weight="700" fill="#F0F4FF" opacity="0.8"
+              data-es="Agendamiento" data-en="Scheduling">Agendamiento</text>
+
+        <!-- Nodo 2: Ventas (abajo izquierda) -->
+        <circle cx="100" cy="340" r="38" fill="#080C14" stroke="#00D4FF" stroke-width="1.5" filter="url(#ag-glow)"/>
+        <g transform="translate(100,340)">
+          <line x1="-13" y1="12" x2="-13" y2="-14" stroke="#00D4FF" stroke-width="1.5" opacity="0.35"/>
+          <line x1="-13" y1="12" x2="13" y2="12" stroke="#00D4FF" stroke-width="1.5" opacity="0.35"/>
+          <polyline points="-10,7 -4,-4 3,2 10,-12" fill="none" stroke="#00D4FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="-12" r="3" fill="#00D4FF"/>
+        </g>
+        <text x="100" y="394" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" font-weight="700" fill="#F0F4FF" opacity="0.8"
+              data-es="Ventas" data-en="Sales">Ventas</text>
+
+        <!-- Nodo 3: Cobro (abajo derecha) -->
+        <circle cx="460" cy="340" r="38" fill="#080C14" stroke="#00D4FF" stroke-width="1.5" filter="url(#ag-glow)"/>
+        <g transform="translate(460,340)">
+          <circle cx="0" cy="0" r="15" fill="none" stroke="#00D4FF" stroke-width="1.5"/>
+          <text x="0" y="6" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="18" font-weight="900" fill="#00D4FF">$</text>
+        </g>
+        <text x="460" y="394" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" font-weight="700" fill="#F0F4FF" opacity="0.8"
+              data-es="Cobro" data-en="Collections">Cobro</text>
+
+      </svg>
+    </div>
+
+    <div class="solutions-grid">
+
+      <!-- CARD 1 — Agendamiento -->
+      <div class="sol-card">
+        <h3 class="sol-name"
+            data-es="Agente de Agendamiento"
+            data-en="Scheduling Agent">
+          Agente de Agendamiento
+        </h3>
+        <p class="sol-target"
+           data-es="Consultorios médicos · Centros de imágenes diagnósticas"
+           data-en="Medical offices · Diagnostic imaging centers">
+          Consultorios médicos · Centros de imágenes diagnósticas
+        </p>
+        <div class="sol-divider"></div>
+        <ul class="sol-list">
+          <li data-es="Pacientes que llaman y no encuentran a nadie disponible"
+              data-en="Patients who call and find no one available">
+            Pacientes que llaman y no encuentran a nadie disponible
+          </li>
+          <li data-es="Citas perdidas por falta de confirmación y seguimiento"
+              data-en="Appointments lost due to lack of confirmation and follow-up">
+            Citas perdidas por falta de confirmación y seguimiento
+          </li>
+          <li data-es="Recordatorios que dependen de que alguien los envíe manualmente"
+              data-en="Reminders that depend on someone sending them manually">
+            Recordatorios que dependen de que alguien los envíe manualmente
+          </li>
+        </ul>
+      </div>
+
+      <!-- CARD 2 — Ejecutivo Comercial -->
+      <div class="sol-card">
+        <h3 class="sol-name"
+            data-es="Ejecutivo Comercial AI"
+            data-en="AI Sales Executive">
+          Ejecutivo Comercial AI
+        </h3>
+        <p class="sol-target"
+           data-es="Cualquier negocio con proceso de ventas"
+           data-en="Any business with a sales process">
+          Cualquier negocio con proceso de ventas
+        </p>
+        <div class="sol-divider"></div>
+        <ul class="sol-list">
+          <li data-es="Leads que se enfrían porque nadie los contacta a tiempo"
+              data-en="Leads that go cold because no one follows up in time">
+            Leads que se enfrían porque nadie los contacta a tiempo
+          </li>
+          <li data-es="Seguimiento inconsistente que depende del equipo humano"
+              data-en="Inconsistent follow-up that depends on the human team">
+            Seguimiento inconsistente que depende del equipo humano
+          </li>
+          <li data-es="Ventas perdidas fuera del horario laboral"
+              data-en="Sales lost outside business hours">
+            Ventas perdidas fuera del horario laboral
+          </li>
+        </ul>
+      </div>
+
+      <!-- CARD 3 — Cobro de Cartera -->
+      <div class="sol-card">
+        <h3 class="sol-name"
+            data-es="Agente de Cobro de Cartera"
+            data-en="Collections Agent">
+          Agente de Cobro de Cartera
+        </h3>
+        <p class="sol-target"
+           data-es="Empresas con cartera vencida"
+           data-en="Businesses with overdue receivables">
+          Empresas con cartera vencida
+        </p>
+        <div class="sol-divider"></div>
+        <ul class="sol-list">
+          <li data-es="Clientes que no pagan por falta de recordatorios sistemáticos"
+              data-en="Clients who don't pay due to lack of systematic reminders">
+            Clientes que no pagan por falta de recordatorios sistemáticos
+          </li>
+          <li data-es="Equipo de cobro saturado con llamadas repetitivas de bajo valor"
+              data-en="Collections team overwhelmed with repetitive low-value calls">
+            Equipo de cobro saturado con llamadas repetitivas de bajo valor
+          </li>
+          <li data-es="Cartera que crece sin gestión organizada ni seguimiento"
+              data-en="Receivables growing without organized management or follow-up">
+            Cartera que crece sin gestión organizada ni seguimiento
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       CÓMO FUNCIONA
+       Agrega o quita pasos editando los .step dentro de .steps.
+  ============================================================ -->
+  <section class="how" id="como-funciona">
+
+    <p class="section-tag"
+       data-es="Cómo empezar"
+       data-en="How to start">
+      Cómo empezar
+    </p>
+
+    <h2 class="section-title"
+        data-es="Empieza en 3 pasos"
+        data-en="Get started in 3 steps">
+      Empieza en 3 pasos
+    </h2>
+
+    <p class="section-sub"
+       data-es="Sin meses de implementación. Sin equipos técnicos. Tu agente operando en días."
+       data-en="No months of implementation. No technical teams. Your agent running in days.">
+      Sin meses de implementación. Sin equipos técnicos. Tu agente operando en días.
+    </p>
+
+    <div class="steps">
+
+      <!-- PASO 1 -->
+      <div class="step">
+        <div class="step-circle">01</div>
+        <div>
+          <p class="step-title"
+             data-es="Nos cuentas tu proceso"
+             data-en="You tell us your process">
+            Nos cuentas tu proceso
+          </p>
+          <p class="step-desc"
+             data-es="Una llamada de 30 minutos para entender tu operación, tus clientes y los resultados que quieres lograr."
+             data-en="A 30-minute call to understand your operation, your clients, and the results you want to achieve.">
+            Una llamada de 30 minutos para entender tu operación, tus clientes y los resultados que quieres lograr.
+          </p>
+        </div>
+      </div>
+
+      <!-- PASO 2 -->
+      <div class="step">
+        <div class="step-circle">02</div>
+        <div>
+          <p class="step-title"
+             data-es="Configuramos tu agente"
+             data-en="We configure your agent">
+            Configuramos tu agente
+          </p>
+          <p class="step-desc"
+             data-es="Adaptamos el agente a tu negocio: tono de voz, horarios, guiones y reglas específicas de tu industria."
+             data-en="We adapt the agent to your business: tone of voice, schedules, scripts, and industry-specific rules.">
+            Adaptamos el agente a tu negocio: tono de voz, horarios, guiones y reglas específicas de tu industria.
+          </p>
+        </div>
+      </div>
+
+      <!-- PASO 3 -->
+      <div class="step">
+        <div class="step-circle">03</div>
+        <div>
+          <p class="step-title"
+             data-es="Tu agente empieza a trabajar"
+             data-en="Your agent starts working">
+            Tu agente empieza a trabajar
+          </p>
+          <p class="step-desc"
+             data-es="Desde el primer día atiende, agenda, vende o cobra — las 24 horas, los 7 días de la semana."
+             data-en="From day one it attends, schedules, sells, or collects — 24 hours a day, 7 days a week.">
+            Desde el primer día atiende, agenda, vende o cobra — las 24 horas, los 7 días de la semana.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       PRECIOS
+  ============================================================ -->
+  <section class="how" id="precios">
+
+    <p class="section-tag"
+       data-es="Precios"
+       data-en="Pricing">
+      Precios
+    </p>
+
+    <h2 class="section-title"
+        data-es="Desde 150 USD"
+        data-en="Starting at 150 USD">
+      Desde 150 USD
+    </h2>
+
+    <p class="section-sub"
+       data-es="Habla con un asesor y te armamos un plan según tu operación."
+       data-en="Talk to an advisor and we'll build a plan for your operation.">
+      Habla con un asesor y te armamos un plan según tu operación.
+    </p>
+
+  </section>
+
+
+  <!-- ============================================================
+       CTA DE CONTACTO
+       Edita el headline, subtítulo y nota según la propuesta de valor.
+       Los canales de contacto se pueden agregar o quitar fácilmente.
+  ============================================================ -->
+  <section class="cta-section" id="contacto">
+
+    <p class="section-tag"
+       data-es="Empieza hoy"
+       data-en="Get started today">
+      Empieza hoy
+    </p>
+
+    <h2 class="section-title"
+        data-es="¿Cuánto está perdiendo tu negocio hoy?"
+        data-en="How much is your business losing today?">
+      ¿Cuánto está perdiendo tu negocio hoy?
+    </h2>
+
+    <p class="section-sub"
+       data-es="Cada cita no agendada, cada lead sin respuesta y cada cobro sin gestionar es dinero que se va. Hablemos."
+       data-en="Every missed appointment, every unanswered lead, and every unmanaged collection is money walking out the door. Let's talk.">
+      Cada cita no agendada, cada lead sin respuesta y cada cobro sin gestionar es dinero que se va. Hablemos.
+    </p>
+
+    <!-- Botones -->
+    <div class="cta-btns">
+      <a href="https://wa.me/573204701302" target="_blank" rel="noopener" class="btn-primary"
+         data-es="Hablar con un asesor"
+         data-en="Talk to an advisor">
+        <i class="fa-brands fa-whatsapp"></i> Hablar con un asesor
+      </a>
+    </div>
+
+
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER
+       Mínimo: logo + links legales + copyright.
+       Agrega redes sociales aquí si se crean en el futuro.
+  ============================================================ -->
+  <footer>
+    <a href="#" class="footer-logo">
+      <em>automations</em><strong>.life</strong>
+    </a>
+
+    <!-- Links legales — agrega o quita según necesidad -->
+    <div class="footer-links">
+      <a href="#" data-es="Privacidad"        data-en="Privacy">Privacidad</a>
+      <a href="#" data-es="Términos de uso"   data-en="Terms of use">Términos de uso</a>
+      <a href="#" data-es="Contacto"          data-en="Contact">Contacto</a>
+    </div>
+
+    <!-- Cambia el año manualmente o con JS si lo prefieres -->
+    <p class="footer-copy">© 2026 automations.life</p>
+  </footer>
+
+
+  <!-- ============================================================
+       JS — Cambio de idioma
+       Recorre todos los elementos con data-es / data-en
+       y reemplaza el texto según el idioma seleccionado.
+  ============================================================ -->
+  <script>
+    const titles = {
+      es: 'Automations.life | Agentes de IA para tu negocio',
+      en: 'Automations.life | AI Agents for your business'
+    };
+    const descriptions = {
+      es: 'Automatiza con IA las conversaciones más críticas de tu negocio. Agendamiento, ventas y cobro de cartera 24/7. Sin contratar más personal. Desde 150 USD.',
+      en: 'Automate with AI the most critical conversations in your business. Scheduling, sales and collections 24/7. No extra staff needed. Starting at 150 USD.'
+    };
+
+    function setLang(lang, btn) {
+      document.querySelectorAll('[data-es]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang);
+      });
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.documentElement.lang = lang;
+      document.title = titles[lang];
+      document.querySelector('meta[name="description"]').setAttribute('content', descriptions[lang]);
+    }
+  </script>
+
+</body>
+</html>
