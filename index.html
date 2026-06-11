@@ -75,9 +75,19 @@
     }
 
     /* Logo */
-    .logo { text-decoration: none; font-size: 1.2rem; font-weight: 800; letter-spacing: -0.5px; }
+    .logo { text-decoration: none; font-size: 1.2rem; font-weight: 800; letter-spacing: -0.5px; display: inline-flex; align-items: center; gap: 0.45rem; }
     .logo em     { color: var(--logo-color-1); font-style: normal; }
     .logo strong { color: var(--logo-color-2); font-weight: 800; }
+    .logo-icon {
+      width: 1.6rem; height: 1.6rem; flex-shrink: 0;
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      border: 2px solid #00D4FF;
+      background: #080C14;
+      font-size: 0.85rem; font-weight: 900; font-style: normal;
+      color: #00D4FF; line-height: 1;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
 
     /* Links — ocultos en móvil, visibles en desktop */
     .nav-links { display: none; }
@@ -328,7 +338,7 @@
       }
     }
 
-    .footer-logo { text-decoration: none; font-size: 1.1rem; font-weight: 800; }
+    .footer-logo { text-decoration: none; font-size: 1.1rem; font-weight: 800; display: inline-flex; align-items: center; gap: 0.45rem; }
     .footer-logo em     { color: var(--logo-color-1); font-style: normal; }
     .footer-logo strong { color: var(--logo-color-2); }
 
@@ -512,6 +522,7 @@
   ============================================================ -->
   <nav>
     <a href="#" class="logo">
+      <span class="logo-icon" aria-hidden="true">A</span>
       <em>automations</em><strong>.life</strong>
     </a>
 
@@ -978,6 +989,7 @@
   ============================================================ -->
   <footer>
     <a href="#" class="footer-logo">
+      <span class="logo-icon" aria-hidden="true">A</span>
       <em>automations</em><strong>.life</strong>
     </a>
 
