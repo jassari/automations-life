@@ -24,6 +24,13 @@
       --color-border:    rgba(255,255,255,0.07); /* bordes de cards y nav */
       --color-card:      rgba(255,255,255,0.04); /* fondo de cards */
 
+      /* --- Acento rojo ---
+         Complementario del cian (~mismo brillo/saturación para que
+         combine con el estilo "neón" del sitio). Úsalo con moderación
+         para urgencia/pérdida: ej. el stat "-60%", badges de alerta,
+         o el ::before del glow en rgba(255,59,71,X). */
+      --color-red:       #FF3B47;
+
       /* --- Logo (2 colores) ---
          logo-1 → "automations"
          logo-2 → ".life"           */
@@ -172,6 +179,7 @@
       margin-bottom: 1.4rem;
     }
     h1 .accent { color: var(--color-primary); }
+    .accent-red { color: var(--color-red); }
 
     @media (min-width: 640px)  { h1 { font-size: 3rem;   letter-spacing: -2px; } }
     @media (min-width: 768px)  { h1 { font-size: 3.8rem; letter-spacing: -2.5px; } }
@@ -229,6 +237,10 @@
       color: var(--color-primary);
     }
     @media (min-width: 768px) { .stat-num { font-size: 3rem; } }
+
+    /* Stat que representa una pérdida/problema (ej. cartera vencida) —
+       usa el acento rojo en vez del cian para reforzar la urgencia */
+    .stat-num.stat-num--red { color: var(--color-red); }
 
     .stat-label {
       font-size: 1rem; color: var(--color-muted); margin-top: 0.2rem;
@@ -369,13 +381,13 @@
       border-top: 1px solid var(--color-border);
     }
 
-    /* Glow de fondo — igual que el hero.
-       Si cambias --color-primary actualiza el color aquí también */
+    /* Glow de fondo — usa --color-red en vez de --color-primary
+       porque esta sección habla de dinero que se está perdiendo */
     .cta-section::before {
       content: '';
       position: absolute; bottom: -100px; left: 50%; transform: translateX(-50%);
       width: 600px; height: 400px;
-      background: radial-gradient(ellipse, rgba(0,212,255,0.09) 0%, transparent 65%);
+      background: radial-gradient(ellipse, rgba(255,59,71,0.09) 0%, transparent 65%);
       pointer-events: none;
     }
 
@@ -600,7 +612,7 @@
         </div>
       </div>
       <div class="stat">
-        <div class="stat-num">-60%</div>
+        <div class="stat-num stat-num--red">-60%</div>
         <div class="stat-label"
              data-es="en cartera vencida"
              data-en="in overdue receivables">
@@ -957,10 +969,10 @@
       Empieza hoy
     </p>
 
-    <h2 class="section-title"
-        data-es="¿Cuánto está perdiendo tu negocio hoy?"
-        data-en="How much is your business losing today?">
-      ¿Cuánto está perdiendo tu negocio hoy?
+    <h2 class="section-title">
+      <span data-es="¿Cuánto está" data-en="How much is your business">¿Cuánto está</span>
+      <span class="accent-red" data-es="perdiendo" data-en="losing">perdiendo</span>
+      <span data-es="tu negocio hoy?" data-en="today?">tu negocio hoy?</span>
     </h2>
 
     <p class="section-sub"
